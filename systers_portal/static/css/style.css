@@ -122,20 +122,20 @@ body > .container-fluid {
   border-width: 0 1px 1px 1px;
   font-size: 16px;
   font-weight: bolder;
-  font-family: "Cairo";
+  font-family: 'Cairo';
 }
 
 #lower-nav {
   margin-top: 65px;
-  border-top: 0.1em solid #54bceb;
+  border-top: .1em solid #54bceb;
   width: 60%;
 }
 
-#lower-nav > li > a {
+#lower-nav>li>a {
   color: #101820;
 }
 
-#upper-nav > li > a {
+#upper-nav>li>a {
   color: white;
   height: 40px;
   font-size: 14px;
@@ -145,10 +145,10 @@ body > .container-fluid {
 #upper-nav {
   position: absolute;
   right: 130px;
-  top: 20px;
+  top:20px;
   font-size: 16px;
   font-weight: bolder;
-  font-family: "Cairo";
+  font-family: 'Cairo';
 }
 
 #line {
@@ -201,7 +201,7 @@ body > .container-fluid {
 .featurette-heading {
   font-weight: 300;
   font-family: Cairo;
-  color: #f89728;
+  color:#F89728;
   line-height: 1;
   letter-spacing: -1px;
   margin-top: 0;
@@ -214,7 +214,7 @@ body > .container-fluid {
 }
 
 .btn {
-  background-color: #005c88;
+  background-color: #005c88 ;
   border-color: #005c88;
 }
 
@@ -235,6 +235,7 @@ body > .container-fluid {
   }
 }
 
+
 /* Common: about us, contact
 -------------------------------------------------- */
 .contact-text,
@@ -246,7 +247,8 @@ body > .container-fluid {
   margin: 20px 0;
 }
 
-.about-us-head {
+
+.about-us-head{
   font-family: Cairo;
   color: #8d2165;
 }
@@ -287,7 +289,7 @@ body > .container-fluid {
   color: white;
   font-family: Cairo;
   font-size: 18px;
-  background-color: #54bceb;
+  background-color: #54BCEB;
   text-transform: uppercase;
   border: none;
 }
@@ -311,7 +313,7 @@ input {
 .fake-border {
   font-style: italic;
   width: auto;
-  font-family: "Cairo";
+  font-family: 'Cairo';
   background-color: #f5f5f5;
   display: inline;
   border: 1px solid #f5f5f5;
@@ -350,11 +352,10 @@ input {
   width: 30%;
 }
 
-#meetup-location-input,
-#location-input {
+#meetup-location-input,#location-input {
   width: 15%;
   font-style: italic;
-  font-family: "Cairo";
+  font-family: 'Cairo';
   background-color: #f5f5f5;
   display: inline;
   border: 1px solid #f5f5f5;
@@ -366,7 +367,7 @@ input {
 
 /* Common: new community proposal form
 ---------------------------------------------------*/
-#google-embed-form {
+#google-embed-form{
   overflow: auto;
   position: absolute;
   left: 0;
@@ -380,7 +381,7 @@ input {
 ---------------------------------------------------*/
 .request-form-head {
   color: #8d2165;
-  font-family: "Cairo";
+  font-family: 'Cairo';
 }
 
 .form-control {
@@ -388,6 +389,7 @@ input {
 }
 .option {
   color: white;
+
 }
 
 .well {
@@ -399,7 +401,7 @@ input {
   font-family: Cairo;
 }
 
-.ml15 {
+.ml15{
   font-family: Cairo;
 }
 
@@ -414,7 +416,7 @@ input {
 }
 
 .twitter_icon {
-  color: #55acee;
+ color: #55acee;
 }
 
 .github_icon {
@@ -450,7 +452,7 @@ input {
 
 .twitter_button,
 .twitter_button:hover {
-  background-color: #55acee;
+  background-color:  #55acee;
   color: #55acee;
 }
 
@@ -509,6 +511,7 @@ span {
   font-size: 1em;
 }
 
+
 /* User Profile
 -------------------------------------------------- */
 .profile-row {
@@ -530,7 +533,7 @@ span {
 }
 
 table a.table-anchor,
-table.decoration-none tr a {
+table.decoration-none  tr a {
   text-decoration: none !important;
 }
 
@@ -591,7 +594,7 @@ table.decoration-none tr a {
 }
 
 .map-container {
-  height: 400px;
+  height:400px;
   padding-right: 15px;
   padding-left: 15px;
 }
@@ -600,12 +603,12 @@ table.decoration-none tr a {
   margin-right: 15px;
 }
 
-.text-bottom {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
+.text-bottom{
+    padding: 10px;
+    border-bottom: 1px solid #eee;
 }
 
-.upcomingMeetupslist {
+.upcomingMeetupslist{
   height: 400px;
   overflow-y: scroll;
   line-height: 1em;
@@ -615,28 +618,28 @@ table.decoration-none tr a {
 
 /* Commentbox CSS
 ------------------------------------------------- */
-.comment-box {
+.comment-box{
   border: 0px;
   background-color: white;
   color: #555555;
   font-family: Georgia, "Times New Roman", Times, serif;
-  font-size: 1em;
-  line-height: 1em;
+  font-size: 1.0em;
+  line-height: 1.0em;
 }
-
+  
 .edit .delete {
-  background-color: #fff;
-  color: black;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-  float: right;
+    background-color: #fff;
+    color: black;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    float: right;
 }
 
-.commentbox .details {
+.commentbox .details{
   text-decoration: none;
-
-  /*  webkit-text-size-adjust: 100%;*/
+  
+/*  webkit-text-size-adjust: 100%;*/
 }
 
 /* Meetup Location Members user-cell space
@@ -678,63 +681,63 @@ table.decoration-none tr a {
     margin: 6px;
   }
   #upper-nav {
-    display: none;
+      display: none;
   }
 }
 
 @media (max-width: 991px) {
-  .navbar-header {
-    float: none;
-  }
-  .navbar-toggle {
-    display: block;
-  }
-  .navbar-collapse {
-    border-top: 1px solid transparent;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  }
-  .navbar-collapse.collapse {
-    display: none;
-  }
-  .navbar-nav {
-    float: none;
-    margin: 7.5px -15px;
-  }
-  .navbar-nav > li {
-    float: none;
-  }
-  .navbar-nav > li > a {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .navbar-text {
-    float: none;
-    margin: 15px 0;
-  }
-  .navbar-collapse.collapse.in {
-    display: block;
-  }
-  .collapsing {
-    overflow: hidden;
-  }
-  #log-btn {
-    margin-right: 19px;
-    margin-top: 3px;
-  }
-  #signup-btn {
-    margin-left: 19px;
-    margin-bottom: 3px;
-  }
+    .navbar-header {
+        float: none;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-collapse.collapse {
+        display: none;
+    }
+    .navbar-nav {
+        float: none;
+        margin: 7.5px -15px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .navbar-text {
+        float: none;
+        margin: 15px 0;
+    }
+    .navbar-collapse.collapse.in {
+        display: block;
+    }
+    .collapsing {
+        overflow: hidden;
+    }
+    #log-btn {
+        margin-right: 19px;
+        margin-top: 3px;
+    }
+    #signup-btn {
+        margin-left: 19px;
+        margin-bottom: 3px;
+    }
 }
 
 @media (min-width: 769px) {
-  #log-btn-menu {
-    display: none;
-  }
-  #signup-btn-menu {
-    display: none;
-  }
-  #user-dropdown-menu {
-    display: none;
-  }
+    #log-btn-menu {
+        display: none;
+    }
+    #signup-btn-menu {
+        display: none;
+    }
+    #user-dropdown-menu {
+        display: none;
+    }
 }
