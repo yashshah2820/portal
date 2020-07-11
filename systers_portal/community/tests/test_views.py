@@ -1,3 +1,4 @@
+from cities_light.models import City, Country
 from django.contrib.auth.models import User, Group
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save, post_delete
@@ -14,6 +15,9 @@ class RequestCommunityViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        self.location = City.objects.create(name='Foo', display_name='Foo',
+                                            country=country)
 
     def test_get_request_community_view(self):
         url = reverse('request_community')
@@ -42,7 +46,8 @@ class RequestCommunityViewTestCase(TestCase):
         # Test with login but valid data
         self.client.login(username='foo', password='foobar')
         valid_data = {'name': 'Bar', 'slug': 'foo', 'order': '1', 'user': self.systers_user,
-                      'is_member': 'Yes', 'email': 'foo@bar.com', 'type_community': 'Other',
+                      'location': self.location.id, 'is_member': 'Yes', 'email': 'foo@bar.com',
+                      'type_community': 'Other',
                       'community_channel': 'Existing Social Media Channels ',
                       'demographic_target_count': 'Foobarbar', 'purpose': 'foopurpose',
                       'is_avail_volunteer': 'Yes', 'count_avail_volunteer': '15',
@@ -62,8 +67,12 @@ class EditCommunityRequestViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        self.location = City.objects.create(name='Foo', display_name='Foo',
+                                            country=country)
         self.community_request = RequestCommunity.objects.create(
-            name="Foo", slug="foo", order=1, is_member='Yes', type_community='Other',
+            name="Foo", slug="foo", order=1, location=self.location, is_member='Yes',
+            type_community='Other',
             community_channel='Existing Social Media Channels ',
             is_avail_volunteer='Yes', count_avail_volunteer=0,
             user=self.systers_user)
@@ -100,7 +109,8 @@ class EditCommunityRequestViewTestCase(TestCase):
     def test_post_edit_community_request_view(self):
         url = reverse('edit_community_request', kwargs={'slug': 'foo'})
         # Test without logging in,and posting data
-        valid_data = {'name': 'Bar', 'slug': 'bar', 'order': '1', 'user': self.systers_user,
+        valid_data = {'name': 'Bar', 'slug': 'bar', 'order': '1',
+                      'location': self.location.id, 'user': self.systers_user,
                       'is_member': 'Yes', 'email': 'foo@bar.com', 'type_community': 'Other',
                       'community_channel': 'Existing Social Media Channels ',
                       'demographic_target_count': 'Foobarbar', 'purpose': 'foopurpose',
@@ -137,8 +147,12 @@ class ViewCommunityRequestViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        location = City.objects.create(name='Foo', display_name='Foo',
+                                       country=country)
         self.community_request = RequestCommunity.objects.create(
-            name="Foo", slug="foo", order=1, is_member='Yes', type_community='Other',
+            name="Foo", slug="foo", order=1, location=location, is_member='Yes',
+            type_community='Other',
             community_channel='Existing Social Media Channels ',
             is_avail_volunteer='Yes', count_avail_volunteer=0,
             user=self.systers_user)
@@ -195,8 +209,12 @@ class NewCommunityRequestsListViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        location = City.objects.create(name='Foo', display_name='Foo',
+                                       country=country)
         self.community_request = RequestCommunity.objects.create(
-            name="Foo", slug="foo", order=1, is_member='Yes', type_community='Other',
+            name="Foo", slug="foo", order=1, location=location, is_member='Yes',
+            type_community='Other',
             community_channel='Existing Social Media Channels ',
             is_avail_volunteer='Yes', count_avail_volunteer=0,
             user=self.systers_user)
@@ -228,8 +246,12 @@ class RejectRequestCommunityViewTestCase(TestCase):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
         self.password = 'foobar'
+        country = Country.objects.create(name='Bar', continent='AS')
+        location = City.objects.create(name='Foo', display_name='Foo',
+                                       country=country)
         self.community_request = RequestCommunity.objects.create(
-            name="Foo", slug="foo", order=1, is_member='Yes', type_community='Other',
+            name="Foo", slug="foo", order=1, location=location, is_member='Yes',
+            type_community='Other',
             community_channel='Existing Social Media Channels ',
             is_avail_volunteer='Yes', count_avail_volunteer=0,
             user=self.systers_user)
@@ -287,8 +309,12 @@ class ApproveRequestCommunityViewTestCase(TestCase):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
         self.password = 'foobar'
+        country = Country.objects.create(name='Bar', continent='AS')
+        self.location = City.objects.create(name='Foo', display_name='Foo',
+                                            country=country)
         self.community_request = RequestCommunity.objects.create(
-            name="Foo", slug="foo", order=1, is_member='Yes', type_community='Other',
+            name="Foo", slug="foo", order=1, location=self.location, is_member='Yes',
+            type_community='Other',
             community_channel='Existing Social Media Channels ',
             is_avail_volunteer='Yes', count_avail_volunteer=0,
             user=self.systers_user)
@@ -323,7 +349,7 @@ class ApproveRequestCommunityViewTestCase(TestCase):
             username='foo-bar', email='abcd@gmail.com', password=self.password)
         admin_systers_user = SystersUser.objects.get(user=admin)
         Community.objects.create(name="FooBarComm", slug="foobar",
-                                 order=1, admin=admin_systers_user)
+                                 order=1, location=self.location, admin=admin_systers_user)
         self.client.login(username='foo-bar', password='foobar')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
@@ -342,7 +368,7 @@ class ApproveRequestCommunityViewTestCase(TestCase):
             username='foo-bar', email='abcd@gmail.com', password=self.password)
         admin_systers_user = SystersUser.objects.get(user=admin)
         Community.objects.create(name="FooBarComm", slug="foo",
-                                 order=2, admin=admin_systers_user)
+                                 order=2, location=self.location, admin=admin_systers_user)
         self.client.login(username='foo-bar', password='foobar')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
@@ -353,8 +379,11 @@ class ViewCommunityProfileViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        location = City.objects.create(name='Foo', display_name='Foo',
+                                       country=country)
         self.community = Community.objects.create(name="Foo", slug="foo",
-                                                  order=1,
+                                                  order=1, location=location,
                                                   admin=self.systers_user)
 
     def test_view_community_profile_view(self):
@@ -379,8 +408,11 @@ class EditCommunityProfileViewTestCase(TestCase):
                             dispatch_uid="remove_groups")
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        self.location = City.objects.create(name='Foo', display_name='Foo',
+                                            country=country)
         self.community = Community.objects.create(name="Foo", slug="foo",
-                                                  order=1,
+                                                  order=1, location=self.location,
                                                   admin=self.systers_user)
 
     def test_get_edit_community_profile_view(self):
@@ -415,7 +447,8 @@ class EditCommunityProfileViewTestCase(TestCase):
         url = reverse('edit_community_profile', kwargs={'slug': 'foo'})
         data = {'name': 'Bar',
                 'slug': 'bar',
-                'order': 1}
+                'order': 1,
+                'location': self.location.id}
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 403)
         self.client.login(username='foo', password='foobar')
@@ -443,8 +476,11 @@ class CommunityLandingViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        location = City.objects.create(name='Foo', display_name='Foo',
+                                       country=country)
         self.community = Community.objects.create(name="Foo", slug="foo",
-                                                  order=1,
+                                                  order=1, location=location,
                                                   admin=self.systers_user)
 
     def test_get_community_landing_view(self):
@@ -466,8 +502,11 @@ class CommunityPageViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        location = City.objects.create(name='Foo', display_name='Foo',
+                                       country=country)
         self.community = Community.objects.create(name="Foo", slug="foo",
-                                                  order=1,
+                                                  order=1, location=location,
                                                   admin=self.systers_user)
         CommunityPage.objects.create(slug="page", title="Page", order=1,
                                      author=self.systers_user,
@@ -574,6 +613,9 @@ class AddCommunityViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        self.location = City.objects.create(name='Foo', display_name='Foo',
+                                            country=country)
 
     def test_get_add_community_view(self):
         """Test GET request to add a new community"""
@@ -616,7 +658,8 @@ class AddCommunityViewTestCase(TestCase):
         self.client.login(username='foo-bar', password='foobar')
         data = {'name': 'Bar',
                 'slug': 'foo',
-                'order': '1'}
+                'order': '1',
+                'location': self.location.id}
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 302)
 
@@ -625,8 +668,11 @@ class AddCommunityPageViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        location = City.objects.create(name='Foo', display_name='Foo',
+                                       country=country)
         self.community = Community.objects.create(name="Foo", slug="foo",
-                                                  order=1,
+                                                  order=1, location=location,
                                                   admin=self.systers_user)
 
     def test_get_add_community_page_view(self):
@@ -675,8 +721,11 @@ class EditCommunityPageViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        location = City.objects.create(name='Foo', display_name='Foo',
+                                       country=country)
         self.community = Community.objects.create(name="Foo", slug="foo",
-                                                  order=1,
+                                                  order=1, location=location,
                                                   admin=self.systers_user)
         self.page = CommunityPage.objects.create(slug="bar", title="Bar",
                                                  order=1,
@@ -726,8 +775,11 @@ class DeleteCommunityPageViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        location = City.objects.create(name='Foo', display_name='Foo',
+                                       country=country)
         self.community = Community.objects.create(name="Foo", slug="foo",
-                                                  order=1,
+                                                  order=1, location=location,
                                                   admin=self.systers_user)
         CommunityPage.objects.create(slug="bar", title="Bar", order=1,
                                      author=self.systers_user,
@@ -764,8 +816,11 @@ class CommunityUsersViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        location = City.objects.create(name='Foo', display_name='Foo',
+                                       country=country)
         self.community = Community.objects.create(name="Foo", slug="foo",
-                                                  order=1,
+                                                  order=1, location=location,
                                                   admin=self.systers_user)
         CommunityPage.objects.create(slug="bar", title="Bar", order=1,
                                      author=self.systers_user,
@@ -820,8 +875,11 @@ class UserPermissionGroupsViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='foo', password='foobar')
         self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Bar', continent='AS')
+        location = City.objects.create(name='Foo', display_name='Foo',
+                                       country=country)
         self.community = Community.objects.create(name="Foo", slug="foo",
-                                                  order=1,
+                                                  order=1, location=location,
                                                   admin=self.systers_user)
 
     def test_get_user_permissions_groups(self):
@@ -871,3 +929,67 @@ class UserPermissionGroupsViewTestCase(TestCase):
         response = self.client.post(url, data={})
         self.assertEqual(response.status_code, 302)
         self.assertFalse(self.systers_user.is_group_member(group))
+
+
+class CommunitySearchViewTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='Test', password='foobar')
+        self.systers_user = SystersUser.objects.get(user=self.user)
+        country = Country.objects.create(name='Test Country', continent='AS')
+        location = City.objects.create(name='Test City', display_name='Test City',
+                                       latitude=20, longitude=20,
+                                       country=country)
+        self.community1 = Community.objects.create(name="Foo", slug="foo",
+                                                   order=1, location=location,
+                                                   admin=self.systers_user)
+        self.community2 = Community.objects.create(name="Bar", slug="bar",
+                                                   order=2, location=location,
+                                                   admin=self.systers_user)
+        self.community3 = Community.objects.create(name="Baz", slug="baz",
+                                                   order=3, location=location,
+                                                   admin=self.systers_user)
+
+    def test_search_results(self):
+        url = reverse('search')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'community/community_search.html')
+        self.assertEqual(len(response.context['communities']), 3)
+
+        response = self.client.get('/community/search/?query=')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'community/community_search.html')
+        self.assertEqual(len(response.context['communities']), 3)
+        self.assertContains(response, "Foo")
+        self.assertContains(response, "Bar")
+        self.assertContains(response, "Baz")
+
+        response = self.client.get('/community/search/?query=B')
+        self.assertEqual(len(response.context['communities']), 2)
+        self.assertContains(response, "Bar")
+        self.assertContains(response, "Baz")
+        self.assertNotContains(response, "Foo")
+
+        response = self.client.get('/community/search/?query=Ba')
+        self.assertEqual(len(response.context['communities']), 2)
+        self.assertContains(response, "Bar")
+        self.assertContains(response, "Baz")
+        self.assertNotContains(response, "Foo")
+
+        response = self.client.get('/community/search/?query=Bar')
+        self.assertEqual(len(response.context['communities']), 1)
+        self.assertContains(response, "Bar")
+        self.assertNotContains(response, "Baz")
+        self.assertNotContains(response, "Foo")
+
+        response = self.client.get('/community/search/?query=F')
+        self.assertEqual(len(response.context['communities']), 1)
+        self.assertNotContains(response, "Bar")
+        self.assertNotContains(response, "Baz")
+        self.assertContains(response, "Foo")
+
+        response = self.client.get('/community/search/?query=Foooo')
+        self.assertEqual(len(response.context['communities']), 0)
+        self.assertNotContains(response, "Bar")
+        self.assertNotContains(response, "Baz")
+        self.assertNotContains(response, "Foo")
